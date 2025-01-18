@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --text-color: #737373;
+    --Announcment-bar : rgb(27, 27, 97);
+}
