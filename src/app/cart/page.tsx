@@ -1,96 +1,77 @@
-// "use client";
-// import React from "react";
-// import { remove } from "../redux/cartslice";
-// import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "../redux/store"; 
-// import Image from "next/image";
+"use client";
+import React from "react";
+import { remove } from "../redux/cartslice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store"; // Replace with the actual path to your store's RootState type
+import Image from "next/image";
 
-// interface CartItem {
-//   id: number;
-//   title: string;
-//   price: number;
-//   image: string;
-// }
-
-// const Cartpage: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const cartItems = useSelector((state: RootState) => state.cart);
-
-//   const handleRemove = (id: number) => {
-//     dispatch(remove(id));
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-100 py-8 px-4">
-//       <h3 className="text-3xl font-bold text-center mb-8">Your Cart</h3>
-//       <div className="space-y-6">
-//         {cartItems.map((item: CartItem) => (
-//           <div
-//             key={item.id}
-//             className="flex items-center bg-white shadow-md rounded-lg p-4"
-//           >
-//             {/* Image Section */}
-//             <div className="flex-shrink-0">
-//               <Image
-//                 src={item.image}
-//                 alt={item.title}
-//                 height={150}
-//                 width={150}
-//                 className="rounded-md"
-//               />
-//             </div>
-
-//             {/* Content Section */}
-//             <div className="ml-4 flex-grow">
-//               <h5 className="text-lg font-semibold text-gray-800">
-//                 {item.title}
-//               </h5>
-//               <h5 className="text-lg font-medium text-gray-600 mt-2">
-//                 ${item.price}
-//               </h5>
-//             </div>
-
-//             {/* Button Section */}
-//             <button
-//               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-//               onClick={() => handleRemove(item.id)}
-//             >
-//               Remove
-//             </button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Cartpage;
-import CartManager from "../components/CartComponent/CartManager";
-import { client } from "@/sanity/lib/client";
-
-
-const getProducts = async ()=>{
-  const products = await client.fetch(
-          `
-          *[_type=="product"][0..4]{
-        _id,
-          name,
-          description,
-          quantity,
-          price,
-          "image_url":image.asset->url,
-          rating
-      }
-          `
-  )
-  return products
-
+interface CartItem {
+  _id: string; // The ID is a string.
+  title: string;
+  imageUrl: string | null;
+  price: number;
+  description: string;
+  tags: string[];
+  dicountPercentage?: number;
+  availableSizes?: string[];
 }
 
+const fallbackImage = "/fallback-image.png"; // Path to a fallback image in your public folder
 
-export default async function Home() {
-  const products = await getProducts()
+const Cartpage: React.FC = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart);
+
+  const handleRemove = (_id: string) => {
+    dispatch(remove(_id));
+  };
+
   return (
-    <CartManager products={products}/>
+    <div className="min-h-screen bg-gray-100 py-8 px-4">
+      <h3 className="text-3xl font-bold text-center mb-8">Your Cart</h3>
+      <div className="space-y-6">
+        {cartItems.length === 0 ? (
+          <p className="text-center text-gray-500">Your cart is empty.</p>
+        ) : (
+          cartItems.map((item: CartItem) => (
+            <div
+              key={item._id}
+              className="flex items-center bg-white shadow-md rounded-lg p-4"
+            >
+              {/* Image Section */}
+              <div className="flex-shrink-0">
+                <Image
+                  src={item.imageUrl || fallbackImage}
+                  alt={item.title}
+                  height={150}
+                  width={150}
+                  className="rounded-md"
+                />
+              </div>
+
+              {/* Content Section */}
+              <div className="ml-4 flex-grow">
+                <h5 className="text-lg font-semibold text-gray-800">
+                  {item.title}
+                </h5>
+                <h5 className="text-lg font-medium text-gray-600 mt-2">
+                  ${item.price.toFixed(2)}
+                </h5>
+              </div>
+
+              {/* Button Section */}
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                onClick={() => handleRemove(item._id)}
+              >
+                Remove
+              </button>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
   );
-}
+};
+
+export default Cartpage;
