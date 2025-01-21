@@ -16,7 +16,7 @@ const LetsTalk = () => {
           <div className="w-full max-w-[607px] h-auto flex flex-col items-center text-center gap-[16px]">
             {/* Heading */}
             <h5 className="font-Montserrat font-bold text-[16px] leading-[24px] tracking-[0.1px] text-[#252B42]">
-              WE CAN'T WAIT TO MEET YOU
+              WE CAN&#39;T WAIT TO MEET YOU
             </h5>
             {/* Main Title */}
             <h1 className="font-Montserrat font-bold text-[40px] lg:text-[58px] leading-[48px] lg:leading-[80px] tracking-[0.2px] text-[#252B42]">
