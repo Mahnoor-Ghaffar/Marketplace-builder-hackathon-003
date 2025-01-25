@@ -8,7 +8,7 @@ import PricingFaqs from '@/app/components/PricingComponents/PricingFaqs';
 import Trail from '@/app/components/PricingComponents/Trail';
 import Footer from '@/app/components/HomeComponents/footer';
 
-export const Pricing = () => {
+const Pricing = () => {
   return (
     <main>
         <SecondNavbar />
