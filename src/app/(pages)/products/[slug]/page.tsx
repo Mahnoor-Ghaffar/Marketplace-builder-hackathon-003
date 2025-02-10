@@ -1,3 +1,58 @@
+// 'use client';
+
+// import AnnouncementBar from '@/app/components/HomeComponents/Announcmentbar';
+// import Header from '@/app/components/HomeComponents/header';
+// import ProductsNavbar from '@/app/components/ProductsComponents/ProductsNavbar';
+// import List from '@/app/components/ProductsComponents/List';
+// import Bestseller from '@/app/components/ProductsComponents/Bestseller';
+// import BrandLogoCards from '@/app/components/AboutComponents/BrandLogoCards';
+// import FooterNavbar from '@/app/components/HomeComponents/FooterNavbar';
+// import Footer from '@/app/components/HomeComponents/footer';
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'next/navigation'; // Use this instead of useRouter
+// import Image from 'next/image';
+// import { client } from '@/sanity/lib/client';
+// import { FaChevronLeft, FaChevronRight, FaHeart, FaShoppingCart, FaEye } from 'react-icons/fa';
+// import picture1 from "@/../public/assets/Homepage/product-cover-5.png";
+// import pic2 from "@/../public/assets/Homepage/product-cover-5 (1).png";
+// import Link from 'next/link';
+// import { useDispatch } from 'react-redux';
+// import {add} from '../../../redux/cartslice';
+
+// const fallbackImages = [picture1, pic2];
+
+// interface Product {
+//   _id: string;
+//   title: string;
+//   imageUrl: string | null;
+//   price: number;
+//   description: string;
+//   tags: string[];
+//   dicountPercentage?: number;
+//   availableSizes?: string[];
+// }
+
+// export default function Slug() {
+//   const { slug } = useParams(); // Get dynamic route parameter
+//   const [product, setProduct] = useState<Product | null>(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//   const [quantity, setQuantity] = useState(1);
+//   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+//   const [showFullDescription, setShowFullDescription] = useState<boolean>(false);
+//   const dispatch = useDispatch();
+
+//   // const handleAdd = (product: Product) => {
+//   //   dispatch(add(product));
+//   // };
+//   const handleAdd = (product: Product) => {
+//     dispatch(add({ ...product, quantity: 1 })); // Add default quantity
+//   };
+  
+
+
+
 'use client';
 
 import AnnouncementBar from '@/app/components/HomeComponents/Announcmentbar';
@@ -9,7 +64,7 @@ import BrandLogoCards from '@/app/components/AboutComponents/BrandLogoCards';
 import FooterNavbar from '@/app/components/HomeComponents/FooterNavbar';
 import Footer from '@/app/components/HomeComponents/footer';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation'; // Use this instead of useRouter
+import { useParams } from 'next/navigation'; 
 import Image from 'next/image';
 import { client } from '@/sanity/lib/client';
 import { FaChevronLeft, FaChevronRight, FaHeart, FaShoppingCart, FaEye } from 'react-icons/fa';
@@ -17,7 +72,7 @@ import picture1 from "@/../public/assets/Homepage/product-cover-5.png";
 import pic2 from "@/../public/assets/Homepage/product-cover-5 (1).png";
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
-import {add} from '../../../redux/cartslice'
+import { add } from '../../../redux/cartslice';
 
 const fallbackImages = [picture1, pic2];
 
@@ -28,11 +83,11 @@ interface Product {
   price: number;
   description: string;
   tags: string[];
-  dicountPercentage?: number;
+  discountPercentage?: number;
   availableSizes?: string[];
 }
 
-export default function ProductDetailPage() {
+export default function ProductDetails() {
   const { slug } = useParams(); // Get dynamic route parameter
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,10 +99,8 @@ export default function ProductDetailPage() {
   const dispatch = useDispatch();
 
   const handleAdd = (product: Product) => {
-    dispatch(add(product));
+    dispatch(add({ ...product, quantity: 1 })); // Add default quantity
   };
-
-
 
   useEffect(() => {
     if (!slug) return;
@@ -62,7 +115,7 @@ export default function ProductDetailPage() {
             price,
             description,
             tags,
-            dicountPercentage,
+            discountPercentage,
             availableSizes
           }
         `);
@@ -121,7 +174,7 @@ export default function ProductDetailPage() {
             <Image
               src={displayedImage}
               alt="Product Image"
-              className="rounded-lg h-[700px]"
+              className="rounded-lg h-[600px]"
               width={600}
               height={400}
             />
@@ -167,7 +220,7 @@ export default function ProductDetailPage() {
           )}
 
           {/* Quantity Selector */}
-          <div className="mt-6 flex items-center">
+          <div className="mt-6 flex flex-col md:flex-row items-center">
             <label className="block text-gray-700 font-medium mr-4">Quantity:</label>
             <div className="flex items-center border rounded-md">
               <button
@@ -201,7 +254,7 @@ export default function ProductDetailPage() {
           {/* Add to Cart */}
           <div className="flex items-center gap-4 mt-14">
             <Link href="/cart">
-              <button  onClick={()=>handleAdd(product)}  className="px-6 py-2 bg-[#23A6F0] text-white rounded-md hover:bg-blue-600">
+              <button onClick={() => handleAdd(product)} className="px-6 py-2 bg-[#23A6F0] text-white rounded-md hover:bg-blue-600">
                 Add to cart
               </button>
             </Link>

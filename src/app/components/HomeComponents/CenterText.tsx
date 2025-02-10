@@ -16,7 +16,8 @@ interface CenterText {
 
 const CenterText: React.FC<CenterText> = ({ headings }) => {
   return (
-    <div className="items-center gap-4 py-[60px]">
+    <div className="flex justify-center items-center">
+      <div className="items-center gap-4 py-[60px] w-[200px] sm:w-full">
      {headings.map((heading, index) => (
         <div key={index} className="text-center">
           {heading.smallHeading && (
@@ -45,6 +46,8 @@ const CenterText: React.FC<CenterText> = ({ headings }) => {
         </div>
       ))}
     </div>
+    </div>
+    
   );
 };
 

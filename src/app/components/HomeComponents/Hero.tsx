@@ -3,6 +3,7 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Link from "next/link";
 
 const responsive = {
   desktop: {
@@ -89,12 +90,15 @@ const Hero = () => {
             </p>
 
             {/* Button */}
+            <Link href='/products'>
             <button
               className="mt-[2rem] px-8 py-3 sm:px-8 sm:py-3 text-[16px] bg-green-500
               transition-all duration-200 hover:bg-green-700 flex items-center rounded-md space-x-2 text-white"
             >
               <span className="font-bold">SHOP NOW</span>
             </button>
+            </Link>
+            
           </div>
         </div>
       </div>
